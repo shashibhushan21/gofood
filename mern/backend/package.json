@@ -10,7 +10,9 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.2",
-    "mongoose": "^8.10.1",
+    "mongoose": "^8.10.1"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.9"
   }
 }

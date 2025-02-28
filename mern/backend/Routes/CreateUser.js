@@ -1,8 +1,8 @@
 
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcrypt');
-
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const User = require("../models/User")
 
 const { body, validationResult } = require('express-validator');
@@ -18,6 +18,9 @@ router.post("/createuser", [
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
+
+       const salt = await bcrypt.genSalt(10);
+       const hashedPassword = await bcrypt.hash(req.body.password, salt); 
         try {
             await User.create({
                 // name: "Shashi Bhushan",
@@ -25,7 +28,7 @@ router.post("/createuser", [
                 // email:"shashi.bkumar21@gmail.com",
                 // location:"bhubneswar"
                 name: req.body.name,
-                password: req.body.password,
+                password: hashedPassword,
                 email: req.body.email,
                 location: req.body.location,
 
@@ -91,14 +94,23 @@ router.post("/loginuser", [
         }
 
         // Compare the provided password with the hashed password in the database
-        // const isPasswordValid = await bcrypt.compare(password, userData.password);
-        const isPasswordValid  = await User.findOne({ password: password });
+        const isPasswordValid = await bcrypt.compare(password, userData.password);
+        // const isPasswordValid  = await User.findOne({ password: password });
         if (!isPasswordValid) {
-            return res.status(400).json( alert,{ message: "Invalid password. Please try again." });
+            return res.status(400).json({ message: "Invalid password. Please try again." });
         }
 
+        // const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET);
+
+        const data = {
+            user: {
+                id: userData._id,
+            },
+        }
+
+        const authToken = jwt.sign(data, process.env.JWT_SECRET);
         // If everything is correct, return a success response
-        return res.json({ success: true, message: "User logged in successfully." });
+        return res.json({ success: true, authToken, message: "User logged in successfully." });
 
     } catch (error) {
         console.error('Error during login:', error);

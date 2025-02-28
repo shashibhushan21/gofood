@@ -5,6 +5,7 @@ import {BrowserRouter as Router,
   Route } from 'react-router-dom'
 import Login from './screens/Login'
 import 'bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
+import Signup from './screens/Signup';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="login" element={<Login/>}/>
+        <Route exact path="SignUp" element={<Signup/>}/>
         
       </Routes>
     </div>

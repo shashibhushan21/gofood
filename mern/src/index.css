@@ -3,4 +3,18 @@
 
 body {
     font-family: 'Poppins', sans-serif;
+    background-color: rgb(196, 225, 235);
+}
+
+.card-shadow {
+    overflow: hidden;
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0.08);
+    transition: box-shadow 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+.card-shadow:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+    box-shadow: 0 0 20px 0px rgba(0,0,0.2);
 }

@@ -120,10 +120,10 @@ const Home = () => {
                           return (
                             <div key={filterItems._id} className='col-12 col-md-6 col-lg-3'>
                               <Card 
-                              className="card-shadow"
-                              foodName={filterItems.name}
+                          
+                               fooditem= {filterItems}
                                 options={filterItems.options[0]}
-                                imgsrc={filterItems.img}
+                                // imgsrc={filterItems.img}
                               ></Card>
                             </div>
                           )

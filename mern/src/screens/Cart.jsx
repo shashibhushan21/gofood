@@ -27,8 +27,9 @@ const Cart = () => {
                 order_date: new Date().toLocaleDateString()
             })
         });
-        console.log("Order Response:", response);
+        // console.log("Order Response:", response);
         if (response.status === 200) {
+            alert("Smartness is good, but over smartness is Dengrous not Become OverSmart, without Payment you can't get the Order 😂😂");
             dispatch({ type: "CLEAR" });
         }
     };

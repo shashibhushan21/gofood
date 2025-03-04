@@ -7,7 +7,8 @@ import Login from './screens/Login'
 import 'bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
 import Signup from './screens/Signup';
 import CartProvider from './components/ContextReducer';
-// import Cart from './screens/Cart';
+import MyOrder from './screens/MyOrder';
+
 
 
 const App = () => {
@@ -19,7 +20,8 @@ const App = () => {
         <Route exact path="/" element={<Home/>}/>
         <Route exact path="login" element={<Login/>}/>
         <Route exact path="SignUp" element={<Signup/>}/>
-        {/* <Route exact path="cart" element={<Cart/>}/> */}
+        <Route exact path="myOrder" element={<MyOrder/>}/>
+
         
       </Routes>
     </div>

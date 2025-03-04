@@ -14,17 +14,45 @@ const Card = (props) => {
     const [successMessage, setSuccessMessage] = useState("");
 
     const handleAddToCart = async () => {
-        await dispatch({ type: "ADD", id: props.fooditem._id, name: props.fooditem.name, price: finalPrice, img: props.fooditem.img, qty: qty, size: size });
-
+        // await dispatch({ type: "ADD", id: props.fooditem._id, name: props.fooditem.name, price: finalPrice, img: props.fooditem.img, qty: qty, size: size });
         // await console.log(data);
-         // Show success message
-         setSuccessMessage(`${props.fooditem.name} added to cart`);
 
-         // Reset the success message after 3 seconds
-         setTimeout(() => {
-             setSuccessMessage("");
-         }, 1000);
-       
+        // let food = []
+        // for (const item of data) {
+        //     if (item.id === props.fooditem._id) {
+        //         food = item;
+        //         break;
+        //     }
+        // }
+        // if (food.length > 0) {
+        //     if (food.size === size) {
+        //         await dispatch({ type: "UPDATE", id: props.fooditem._id, price: finalPrice, qty: qty });
+        //         return;
+        //     }
+        //     else if (food.size !== size) {
+        //         await dispatch({ type: "ADD", id: props.fooditem._id, name: props.fooditem.name, price: finalPrice, img: props.fooditem.img, qty: qty, size: size });
+        //         return;
+        //     }
+        //     return;
+        // }
+        // await dispatch({ type: "ADD", id: props.fooditem._id, name: props.fooditem.name, price: finalPrice, img: props.fooditem.img, qty: qty, size: size });
+
+        
+        let food = data.find(item => item.id === props.fooditem._id && item.size === size);
+        let finalPrice = qty * parseInt(options[size]);
+        if (food) {
+            await dispatch({ type: "UPDATE", id: props.fooditem._id, size: size, price: finalPrice, qty: qty });
+        } else {
+            await dispatch({ type: "ADD", id: props.fooditem._id, name: props.fooditem.name, price: finalPrice, img: props.fooditem.img, qty: qty, size: size });
+        }
+        // Show success message
+        setSuccessMessage(`${props.fooditem.name} added to cart`);
+
+        // Reset the success message after 3 seconds
+        setTimeout(() => {
+            setSuccessMessage("");
+        }, 1000);
+
     }
     let finalPrice = qty * parseInt(options[size]);
     useEffect(() => {
@@ -58,14 +86,14 @@ const Card = (props) => {
 
                         <div className='d-inline h-100 m-2 rounded'>
                             {/* Total Price = {options[priceOptions[0]]} */}
-                        <br />   <b>Rs.. ₹</b> {finalPrice}/-
+                            <br />   <b>Rs.. ₹</b> {finalPrice}/-
                         </div>
                     </div>
 
                     <hr></hr>
                     <button className={`btn btn-success justify-center ms-2`} onClick={handleAddToCart}>Add to Cart</button>
                     {successMessage && (
-                        <div className="alert alert-success mt-2" style={{ "width": "100%" , "textAlign": "center", display: "flex", justifyContent: "center", bottom: "0", left: "0", transform: 'translate(-0%, -0%)' ,position: "absolute"}}>
+                        <div className="alert alert-success mt-2" style={{ "width": "100%", "textAlign": "center", display: "flex", justifyContent: "center", bottom: "0", left: "0", transform: 'translate(-0%, -0%)', position: "absolute" }}>
                             {successMessage}
                         </div>
                     )}

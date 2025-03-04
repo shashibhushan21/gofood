@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
 import Modal from '../Modal'
 import Cart from '../screens/Cart'
+import { useCart } from './ContextReducer'
 const Navbar = () => {
+  let data = useCart();
   const [cartView, setCartView] = useState(false)
   const navigate = useNavigate();
   
@@ -44,7 +46,8 @@ const Navbar = () => {
               <>
                 <div className="btn bg-white text-success mx-1" onClick={()=>setCartView(true)}>
                   My Cart {"  "}
-                  <Badge pill bg= "danger">2</Badge>
+                 
+                  <Badge pill bg= "danger">{data.length}</Badge>
                 </div>
                 {cartView? <Modal onClose={()=>setCartView(false)}><Cart/></Modal>:""}
                 <div className="btn bg-danger text-white mx-1" onClick={handleLogout}>

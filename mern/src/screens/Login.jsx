@@ -20,9 +20,8 @@ const Login = () => {
 
       if (data.success) {
         alert('User Login successfully');
+        localStorage.setItem('userEmail', credential.email);
         localStorage.setItem('authToken', data.authToken);
-        console.log(localStorage.getItem('authToken'));
-        console.log('Login Success');
         navigate('/');
       } else {
         alert('Invalid Credentials or User not found');

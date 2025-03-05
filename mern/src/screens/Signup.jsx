@@ -59,7 +59,7 @@ const Signup = () => {
             }),
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         if (data.success) {
             alert('User has been registered successfully');

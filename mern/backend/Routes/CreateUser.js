@@ -19,9 +19,21 @@ router.post("/createuser", [
             return res.status(400).json({ errors: errors.array() });
         }
 
+        const { email, password, name, location } = req.body;
+
+        try {
+            // Check if the email is already registered
+            const existingUser = await User.findOne({ email: email });
+            if (existingUser) {
+                return res.status(400).json({ message: "User is already registered with this email." });
+            }
+
+
+
+
        const salt = await bcrypt.genSalt(10);
        const hashedPassword = await bcrypt.hash(req.body.password, salt); 
-        try {
+        
             await User.create({
                 // name: "Shashi Bhushan",
                 // password: "123456",
@@ -34,10 +46,11 @@ router.post("/createuser", [
 
             })
             res.json({ success: true, message: 'User created successfully' })
-        } catch {
-            res.status(500).json({ message: "Error creating user" })
+        } catch (error) {
+            console.error('Error creating user:', error);
+            res.status(500).json({ message: "Error creating user" });
         }
-    })
+    });
 
 
 
